@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoomIndexRouteImport } from './routes/room/index'
+import { Route as RoomRoomNameRouteImport } from './routes/room/$roomName'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const RoomIndexRoute = RoomIndexRouteImport.update({
   path: '/room/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoomRoomNameRoute = RoomRoomNameRouteImport.update({
+  id: '/room/$roomName',
+  path: '/room/$roomName',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -31,30 +37,34 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/room/$roomName': typeof RoomRoomNameRoute
   '/room/': typeof RoomIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/room/$roomName': typeof RoomRoomNameRoute
   '/room': typeof RoomIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/room/$roomName': typeof RoomRoomNameRoute
   '/room/': typeof RoomIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/room/' | '/api/auth/$'
+  fullPaths: '/' | '/room/$roomName' | '/room/' | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/room' | '/api/auth/$'
-  id: '__root__' | '/' | '/room/' | '/api/auth/$'
+  to: '/' | '/room/$roomName' | '/room' | '/api/auth/$'
+  id: '__root__' | '/' | '/room/$roomName' | '/room/' | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RoomRoomNameRoute: typeof RoomRoomNameRoute
   RoomIndexRoute: typeof RoomIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoomIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/room/$roomName': {
+      id: '/room/$roomName'
+      path: '/room/$roomName'
+      fullPath: '/room/$roomName'
+      preLoaderRoute: typeof RoomRoomNameRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RoomRoomNameRoute: RoomRoomNameRoute,
   RoomIndexRoute: RoomIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
