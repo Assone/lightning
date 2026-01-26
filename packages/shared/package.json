@@ -1,0 +1,9 @@
+{
+  "name": "@lightning/shared",
+  "private": true,
+  "exports": {
+    "./types": {
+      "default": "./src/types/index.ts"
+    }
+  }
+}

@@ -72,6 +72,9 @@ importers:
       '@lightning/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@lightning/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       '@tailwindcss/vite':
         specifier: ^4.1.8
         version: 4.1.18(vite@8.0.0-beta.10(@types/node@25.0.10)(esbuild@0.27.2)(jiti@2.6.1)(tsx@4.21.0))
@@ -247,6 +250,8 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.9.3
+
+  packages/shared: {}
 
   packages/tsconfig:
     devDependencies:
