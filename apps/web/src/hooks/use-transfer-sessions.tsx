@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import {
-  type TransferSession,
   parseTransferMessage,
+  type TransferSession,
   updateTransferSessions,
 } from "@/lib/transfer-sessions";
 
@@ -24,7 +24,7 @@ export const useTransferSessions = (): UseTransferSessionsResult => {
 
   const orderedSessions = useMemo(
     () => [...sessions].sort((a, b) => b.lastUpdatedAt - a.lastUpdatedAt),
-    [sessions]
+    [sessions],
   );
 
   return {

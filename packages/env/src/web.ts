@@ -7,6 +7,6 @@ export const env = createEnv({
     VITE_SUPABASE_URL: z.string().url(),
     VITE_SUPABASE_ANON_KEY: z.string().min(1),
   },
-  runtimeEnv: (import.meta as any).env,
+  runtimeEnv: import.meta.env as unknown as Record<string, string | undefined>,
   emptyStringAsUndefined: true,
 });
