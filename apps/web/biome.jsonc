@@ -1,0 +1,27 @@
+{
+  "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
+  "root": false,
+  "extends": ["../../biome.json", "ultracite/biome/react"],
+
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
+  "linter": {
+    "rules": {
+      "correctness": {
+        "useExhaustiveDependencies": {
+          "options": {
+            "hooks": [
+              {
+                "name": "useLatest",
+                "stableResult": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
