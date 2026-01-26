@@ -1,6 +1,14 @@
 {
   "name": "@lightning/signaling",
   "private": true,
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./adapter/*": {
+      "default": "./src/adapter/*.ts"
+    }
+  },
   "devDependencies": {
     "@lightning/shared": "workspace:*",
     "@lightning/tsconfig": "workspace:*"
