@@ -6,6 +6,9 @@ settings:
 
 catalogs:
   default:
+    '@supabase/supabase-js':
+      specifier: ^2.91.0
+      version: 2.91.1
     '@types/node':
       specifier: ^22.13.14
       version: 22.19.7
@@ -72,12 +75,15 @@ importers:
       '@lightning/env':
         specifier: workspace:*
         version: link:../../packages/env
-      '@lightning/signaling':
-        specifier: workspace:*
-        version: link:../../packages/signaling
       '@lightning/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@lightning/signaling':
+        specifier: workspace:*
+        version: link:../../packages/signaling
+      '@supabase/supabase-js':
+        specifier: 'catalog:'
+        version: 2.91.1
       '@tailwindcss/vite':
         specifier: ^4.1.8
         version: 4.1.18(vite@8.0.0-beta.10(@types/node@25.0.10)(esbuild@0.27.2)(jiti@2.6.1)(tsx@4.21.0))
@@ -258,16 +264,16 @@ importers:
 
   packages/signaling:
     dependencies:
+      '@supabase/supabase-js':
+        specifier: 'catalog:'
+        version: 2.91.1
+    devDependencies:
       '@lightning/shared':
         specifier: workspace:*
         version: link:../shared
       '@lightning/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
-    devDependencies:
-      '@supabase/supabase-js':
-        specifier: ^2.91.1
-        version: 2.91.1
 
   packages/tsconfig:
     devDependencies:
