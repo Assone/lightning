@@ -1,0 +1,35 @@
+{
+  "name": "lightning",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:native": "turbo -F native dev",
+    "dev:web": "turbo -F web dev",
+    "db:push": "turbo -F @lightning/db db:push",
+    "db:studio": "turbo -F @lightning/db db:studio",
+    "db:generate": "turbo -F @lightning/db db:generate",
+    "db:migrate": "turbo -F @lightning/db db:migrate"
+  },
+  "dependencies": {
+    "@lightning/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.3.11",
+    "@lightning/config": "workspace:*",
+    "@types/node": "catalog:",
+    "lefthook": "latest",
+    "turbo": "^2.6.3",
+    "typescript": "catalog:",
+    "ultracite": "7.0.12"
+  },
+  "packageManager": "pnpm@10.28.0"
+}

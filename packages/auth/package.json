@@ -1,0 +1,24 @@
+{
+  "name": "@lightning/auth",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "scripts": {},
+  "dependencies": {
+    "@lightning/db": "workspace:*",
+    "@lightning/env": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@lightning/config": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
