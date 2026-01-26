@@ -72,6 +72,9 @@ importers:
       '@lightning/env':
         specifier: workspace:*
         version: link:../../packages/env
+      '@lightning/signaling':
+        specifier: workspace:*
+        version: link:../../packages/signaling
       '@lightning/shared':
         specifier: workspace:*
         version: link:../../packages/shared
