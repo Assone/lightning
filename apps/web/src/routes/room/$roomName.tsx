@@ -1,6 +1,7 @@
 import { SupabaseSignalingAdapter } from "@lightning/signaling/adapter/supabase";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { RoomParticipants } from "@/components/room-participants";
+import { TransferSessions } from "@/components/transfer-sessions";
 import {
   Card,
   CardDescription,
@@ -10,6 +11,7 @@ import {
 import { Spinner } from "@/components/ui/spinner";
 import { getRoomSession } from "@/functions/room";
 import { useSignaling } from "@/hooks/use-signaling";
+import { useTransferSessions } from "@/hooks/use-transfer-sessions";
 import { supabaseClient } from "@/lib/supabase-client";
 
 export const Route = createFileRoute("/room/$roomName")({
@@ -42,8 +44,9 @@ export const Route = createFileRoute("/room/$roomName")({
 function RouteComponent() {
   const { roomName } = Route.useParams();
   const { clientId, displayName } = Route.useLoaderData();
+  const { sessions, handleMessage } = useTransferSessions();
 
-  const { isConnected, participants } = useSignaling({
+  const { isConnected, participants } = useSignaling<unknown>({
     createAdapter: () =>
       new SupabaseSignalingAdapter({
         supabase: supabaseClient,
@@ -51,6 +54,7 @@ function RouteComponent() {
       }),
     displayName,
     roomName,
+    onMessage: handleMessage,
   });
 
   return (
@@ -71,6 +75,8 @@ function RouteComponent() {
         participants={participants}
         currentParticipantId={clientId}
       />
+
+      <TransferSessions sessions={sessions} />
     </div>
   );
 }
