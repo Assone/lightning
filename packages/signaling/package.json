@@ -1,0 +1,11 @@
+{
+  "name": "@lightning/signaling",
+  "private": true,
+  "devDependencies": {
+    "@lightning/shared": "workspace:*",
+    "@lightning/tsconfig": "workspace:*"
+  },
+  "peerDependencies": {
+    "@supabase/supabase-js": "catalog:"
+  }
+}
