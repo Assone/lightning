@@ -75,7 +75,7 @@ const formatProgress = (progress?: TransferSession["progress"]): string => {
 
   const percent = Math.min(100, (transferredBytes / totalBytes) * 100);
   return `${formatBytes(transferredBytes)} / ${formatBytes(totalBytes)} (${Math.round(
-    percent
+    percent,
   )}%)`;
 };
 
@@ -105,22 +105,23 @@ export const TransferSessions = ({ sessions }: TransferSessionsProps) => {
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex flex-col">
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-muted-foreground text-xs">
                       Session
                     </span>
                     <span className="font-medium">{session.id}</span>
                   </div>
                   <span
-                    className={`rounded-none px-2 py-1 text-xs font-medium ${
+                    className={`rounded-none px-2 py-1 font-medium text-xs ${
                       STATUS_STYLES[session.status]
                     }`}
                   >
                     {STATUS_LABELS[session.status]}
                   </span>
                 </div>
-                <div className="mt-3 grid gap-2 text-xs text-muted-foreground sm:grid-cols-2">
+                <div className="mt-3 grid gap-2 text-muted-foreground text-xs sm:grid-cols-2">
                   <div>
-                    <span className="text-foreground">From:</span> {session.from}
+                    <span className="text-foreground">From:</span>{" "}
+                    {session.from}
                   </div>
                   <div>
                     <span className="text-foreground">To:</span>{" "}
@@ -160,8 +161,9 @@ export const TransferSessions = ({ sessions }: TransferSessionsProps) => {
                   </div>
                 </div>
                 {session.note ? (
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    <span className="text-foreground">Note:</span> {session.note}
+                  <p className="mt-3 text-muted-foreground text-xs">
+                    <span className="text-foreground">Note:</span>{" "}
+                    {session.note}
                   </p>
                 ) : null}
               </li>
