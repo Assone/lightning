@@ -5,3 +5,4 @@ export type {
 } from "./interface";
 export { SignalingEventType } from "./interface";
 export { RTCSignalingMessageType } from "./type";
+export { SupabaseSignalingAdapter } from "./adapter/supabase";
