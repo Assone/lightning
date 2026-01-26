@@ -1,0 +1,10 @@
+{
+  "name": "@lightning/tsconfig",
+  "private": true,
+  "devDependencies": {
+    "@tsconfig/node-lts": "^24.0.0",
+    "@tsconfig/recommended": "^1.0.13",
+    "@tsconfig/strictest": "^2.0.8",
+    "@tsconfig/vite-react": "^7.0.2"
+  }
+}

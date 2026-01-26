@@ -1,0 +1,5 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "display": "TSConfig Vite React",
+  "extends": ["../base.json", "@tsconfig/vite-react/tsconfig.json"]
+}

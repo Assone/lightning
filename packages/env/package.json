@@ -13,7 +13,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@lightning/config": "workspace:*",
+    "@lightning/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:"
   }

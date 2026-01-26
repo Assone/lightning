@@ -1,0 +1,5 @@
+{
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "display": "TSConfig Node",
+  "extends": ["../base.json", "@tsconfig/node-lts/tsconfig.json"]
+}

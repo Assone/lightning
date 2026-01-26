@@ -35,7 +35,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@lightning/config": "workspace:*",
+    "@lightning/tsconfig": "workspace:*",
     "@tanstack/react-router-devtools": "^1.141.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.2.0",

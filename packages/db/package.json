@@ -23,7 +23,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@lightning/config": "workspace:*",
+    "@lightning/tsconfig": "workspace:*",
     "@types/pg": "^8.16.0",
     "drizzle-kit": "^0.31.8",
     "typescript": "catalog:"

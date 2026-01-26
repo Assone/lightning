@@ -1,5 +1,5 @@
 {
-  "extends": "@lightning/config/tsconfig.base.json",
+  "extends": ["@lightning/tsconfig/base.json"],
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,

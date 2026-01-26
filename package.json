@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.11",
-    "@lightning/config": "workspace:*",
+    "@lightning/tsconfig": "workspace:*",
     "@types/node": "catalog:",
     "lefthook": "latest",
     "turbo": "^2.6.3",
