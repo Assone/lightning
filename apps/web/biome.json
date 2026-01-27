@@ -1,8 +1,7 @@
 {
   "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
   "root": false,
-  "extends": ["../../biome.json", "ultracite/biome/react"],
-
+  "extends": "//",
   "css": {
     "parser": {
       "tailwindDirectives": true
@@ -12,6 +11,7 @@
     "rules": {
       "correctness": {
         "useExhaustiveDependencies": {
+          "level": "warn",
           "options": {
             "hooks": [
               {
