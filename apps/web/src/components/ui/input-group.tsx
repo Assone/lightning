@@ -45,6 +45,7 @@ function InputGroupAddon({
   ...props
 }: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
   return (
+    // biome-ignore lint/a11y/useSemanticElements: shadcn/ui input group uses role for styling behavior
     <div
       className={cn(inputGroupAddonVariants({ align }), className)}
       data-align={align}

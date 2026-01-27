@@ -24,7 +24,7 @@ export interface TransferSession {
   };
 }
 
-type TransferRequestMessage = {
+interface TransferRequestMessage {
   type: "transfer:request";
   sessionId: string;
   from: string;
@@ -33,36 +33,36 @@ type TransferRequestMessage = {
   fileSize?: number;
   note?: string;
   timestamp: string | number;
-};
+}
 
-type TransferAcceptedMessage = {
+interface TransferAcceptedMessage {
   type: "transfer:accepted";
   sessionId: string;
   by: string;
   timestamp: string | number;
-};
+}
 
-type TransferRejectedMessage = {
+interface TransferRejectedMessage {
   type: "transfer:rejected";
   sessionId: string;
   by: string;
   reason?: string;
   timestamp: string | number;
-};
+}
 
-type TransferProgressMessage = {
+interface TransferProgressMessage {
   type: "transfer:progress";
   sessionId: string;
   transferredBytes: number;
   totalBytes: number;
   timestamp: string | number;
-};
+}
 
-type TransferCompletedMessage = {
+interface TransferCompletedMessage {
   type: "transfer:completed";
   sessionId: string;
   timestamp: string | number;
-};
+}
 
 export type TransferMessage =
   | TransferRequestMessage

@@ -1,7 +1,7 @@
 import { auth } from "@lightning/auth";
 import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/api/auth/$")({
+export const Route = createFileRoute("/api/auth/$auth")({
   server: {
     handlers: {
       GET: ({ request }) => {

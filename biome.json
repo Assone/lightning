@@ -15,6 +15,7 @@
       "!**/.zed",
       "!**/.vscode",
       "!**/routeTree.gen.ts",
+      "!**/routes/room/$roomName.tsx",
       "!**/src-tauri",
       "!**/.nuxt",
       "!bts.jsonc",
