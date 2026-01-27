@@ -53,20 +53,22 @@ export const ThemeToggle = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          aria-label={buttonLabel}
-          size="icon-sm"
-          type="button"
-          variant="ghost"
-        >
-          <ButtonIcon aria-hidden />
-        </Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger
+        render={
+          <Button
+            aria-label={buttonLabel}
+            size="icon-sm"
+            type="button"
+            variant="ghost"
+          >
+            <ButtonIcon aria-hidden />
+          </Button>
+        }
+      />
       <DropdownMenuContent align="end">
         <DropdownMenuRadioGroup
-          value={activeTheme}
           onValueChange={(value) => setTheme(value)}
+          value={activeTheme}
         >
           {themeOptions.map((option) => (
             <DropdownMenuRadioItem key={option} value={option}>
