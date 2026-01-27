@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Empty, EmptyDescription, EmptyTitle } from "@/components/ui/empty";
+import { formatBytes } from "@/lib/file-size";
 import type {
   TransferSession,
   TransferSessionStatus,
@@ -29,27 +30,6 @@ const STATUS_STYLES: Record<TransferSessionStatus, string> = {
   rejected: "bg-rose-500/10 text-rose-700",
   in_progress: "bg-sky-500/10 text-sky-700",
   completed: "bg-slate-500/10 text-slate-700",
-};
-
-const formatBytes = (bytes?: number): string => {
-  if (!bytes && bytes !== 0) {
-    return "-";
-  }
-
-  if (bytes < 1024) {
-    return `${bytes} B`;
-  }
-
-  const units = ["KB", "MB", "GB", "TB"] as const;
-  let remaining = bytes;
-  let unitIndex = -1;
-
-  while (remaining >= 1024 && unitIndex < units.length - 1) {
-    remaining /= 1024;
-    unitIndex += 1;
-  }
-
-  return `${remaining.toFixed(1)} ${units[unitIndex]}`;
 };
 
 const formatTimestamp = (timestamp?: number): string => {
