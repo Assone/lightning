@@ -51,35 +51,35 @@ export function useSignaling<T>({
   useEffect(() => {
     // Subscribe to events
     const unsubscribeConnect = adapter.on(SignalingEventType.CONNECT, () =>
-      setIsConnected(true),
+      setIsConnected(true)
     );
     const unsubscribeDisconnect = adapter.on(
       SignalingEventType.DISCONNECT,
-      () => setIsConnected(false),
+      () => setIsConnected(false)
     );
     const unsubscribeJoin = adapter.on(
       SignalingEventType.PARTICIPANT_JOINED,
       (participant) => {
         setParticipants((prev) => [...prev, participant]);
-      },
+      }
     );
     const unsubscribeLeave = adapter.on(
       SignalingEventType.PARTICIPANT_LEAVE,
       (leftClientId) => {
         setParticipants((prev) => prev.filter((p) => p.id !== leftClientId.id));
-      },
+      }
     );
     const unsubscribeSignal = adapter.on(
       SignalingEventType.SIGNAL,
       (message) => {
         onSignalRef.current?.(message);
-      },
+      }
     );
     const unsubscribeMessage = adapter.on(
       SignalingEventType.MESSAGE,
       (message) => {
         onMessageRef.current?.(message);
-      },
+      }
     );
 
     adapter.connect({ roomName, participantName: displayName }).then(() => {
@@ -101,28 +101,28 @@ export function useSignaling<T>({
     (target: string, offer: RTCSessionDescriptionInit) => {
       adapter.sendOffer(target, offer);
     },
-    [adapter],
+    [adapter]
   );
 
   const sendAnswer = useCallback(
     (target: string, answer: RTCSessionDescriptionInit) => {
       adapter.sendAnswer(target, answer);
     },
-    [adapter],
+    [adapter]
   );
 
   const sendIce = useCallback(
     (target: string, candidate: RTCIceCandidateInit) => {
       adapter.sendIceCandidate(target, candidate);
     },
-    [adapter],
+    [adapter]
   );
 
   const sendMessage = useCallback(
     (target: string, message: T) => {
       adapter.sendMessage(target, message);
     },
-    [adapter],
+    [adapter]
   );
 
   return {

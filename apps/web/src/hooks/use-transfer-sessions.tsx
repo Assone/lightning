@@ -24,7 +24,7 @@ export const useTransferSessions = (): UseTransferSessionsResult => {
 
   const orderedSessions = useMemo(
     () => [...sessions].sort((a, b) => b.lastUpdatedAt - a.lastUpdatedAt),
-    [sessions],
+    [sessions]
   );
 
   return {

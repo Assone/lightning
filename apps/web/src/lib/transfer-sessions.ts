@@ -72,7 +72,7 @@ export type TransferMessage =
   | TransferCompletedMessage;
 
 export const parseTransferMessage = (
-  message: unknown,
+  message: unknown
 ): TransferMessage | null => {
   if (!isRecord(message)) {
     return null;
@@ -169,7 +169,7 @@ export const parseTransferMessage = (
 
 export const updateTransferSessions = (
   sessions: TransferSession[],
-  message: TransferMessage,
+  message: TransferMessage
 ): TransferSession[] => {
   const existing = sessions.find((session) => session.id === message.sessionId);
   const fallbackTimestamp = resolveTimestamp(message.timestamp);

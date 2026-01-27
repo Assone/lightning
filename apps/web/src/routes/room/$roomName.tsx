@@ -72,8 +72,8 @@ function RouteComponent() {
       </Card>
 
       <RoomParticipants
-        participants={participants}
         currentParticipantId={clientId}
+        participants={participants}
       />
 
       <TransferSessions sessions={sessions} />

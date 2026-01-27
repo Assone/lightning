@@ -75,7 +75,7 @@ const formatProgress = (progress?: TransferSession["progress"]): string => {
 
   const percent = Math.min(100, (transferredBytes / totalBytes) * 100);
   return `${formatBytes(transferredBytes)} / ${formatBytes(totalBytes)} (${Math.round(
-    percent,
+    percent
   )}%)`;
 };
 
@@ -100,8 +100,8 @@ export const TransferSessions = ({ sessions }: TransferSessionsProps) => {
           <ul className="flex flex-col gap-3 text-sm">
             {sessions.map((session) => (
               <li
-                key={session.id}
                 className="rounded-none border border-border/60 px-3 py-3"
+                key={session.id}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <div className="flex flex-col">

@@ -32,9 +32,11 @@ export const setRoomSession = createServerFn({ method: "POST" })
     const session = await useRoomSession();
     const request = getRequest();
     const authSession = await auth.api.getSession(request);
-    const clientId = authSession?.session.userId ?? session.data.clientId ?? crypto.randomUUID();
+    const clientId =
+      authSession?.session.userId ??
+      session.data.clientId ??
+      crypto.randomUUID();
     const displayName = data.displayName.trim();
- 
 
     const payload: RoomSession = {
       clientId,
@@ -53,5 +55,5 @@ export const getRoomSession = createServerFn({ method: "GET" }).handler(
   async () => {
     const session = await useRoomSession();
     return session.data;
-  },
+  }
 );

@@ -15,7 +15,7 @@ interface RoomParticipantsProps {
 
 const isCurrentParticipant = (
   participantId: string,
-  currentParticipantId: string,
+  currentParticipantId: string
 ): boolean => participantId === currentParticipantId;
 
 export const RoomParticipants = ({
@@ -43,8 +43,8 @@ export const RoomParticipants = ({
           <ul className="flex flex-col gap-2 text-sm">
             {participants.map((participant) => (
               <li
-                key={participant.id}
                 className="flex items-center justify-between rounded-none border border-border/60 px-3 py-2"
+                key={participant.id}
               >
                 <span className="font-medium">{participant.name}</span>
                 <span className="text-muted-foreground text-xs">
