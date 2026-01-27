@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import {
   parseTransferMessage,
+  type TransferMessage,
   type TransferSession,
   updateTransferSessions,
 } from "@/lib/transfer-sessions";
@@ -8,6 +9,7 @@ import {
 interface UseTransferSessionsResult {
   sessions: TransferSession[];
   handleMessage: (message: unknown) => void;
+  addMessage: (message: TransferMessage) => void;
 }
 
 export const useTransferSessions = (): UseTransferSessionsResult => {
@@ -22,6 +24,10 @@ export const useTransferSessions = (): UseTransferSessionsResult => {
     setSessions((prev) => updateTransferSessions(prev, parsedMessage));
   }, []);
 
+  const addMessage = useCallback((message: TransferMessage) => {
+    setSessions((prev) => updateTransferSessions(prev, message));
+  }, []);
+
   const orderedSessions = useMemo(
     () => [...sessions].sort((a, b) => b.lastUpdatedAt - a.lastUpdatedAt),
     [sessions],
@@ -30,5 +36,6 @@ export const useTransferSessions = (): UseTransferSessionsResult => {
   return {
     sessions: orderedSessions,
     handleMessage,
+    addMessage,
   };
 };
