@@ -31,13 +31,19 @@ const defaultValues: z.infer<typeof formSchema> = {
   displayName: "",
 };
 
-export const JoinRoom: React.FC<JoinRoomProps> = () => {
+export const JoinRoom: React.FC<JoinRoomProps> = ({
+  roomName,
+  displayName,
+}) => {
   const { isPending } = authClient.useSession();
   const navigate = useNavigate();
 
   const formId = useId();
   const form = useAppForm({
-    defaultValues,
+    defaultValues: {
+      roomName: roomName ?? defaultValues.roomName,
+      displayName: displayName ?? defaultValues.displayName,
+    },
     validators: {
       onChange: formSchema,
       onSubmit: formSchema,
