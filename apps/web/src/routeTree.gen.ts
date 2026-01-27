@@ -15,7 +15,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RoomIndexRouteImport } from './routes/room/index'
 import { Route as RoomRoomNameRouteImport } from './routes/room/$roomName'
-import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$auth'
+import { Route as ApiAuthAuthRouteImport } from './routes/api/auth/$auth'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -47,7 +47,7 @@ const RoomRoomNameRoute = RoomRoomNameRouteImport.update({
   path: '/room/$roomName',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+const ApiAuthAuthRoute = ApiAuthAuthRouteImport.update({
   id: '/api/auth/$auth',
   path: '/api/auth/$auth',
   getParentRoute: () => rootRouteImport,
@@ -60,7 +60,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/room/$roomName': typeof RoomRoomNameRoute
   '/room/': typeof RoomIndexRoute
-  '/api/auth/$auth': typeof ApiAuthSplatRoute
+  '/api/auth/$auth': typeof ApiAuthAuthRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,7 +69,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/room/$roomName': typeof RoomRoomNameRoute
   '/room': typeof RoomIndexRoute
-  '/api/auth/$auth': typeof ApiAuthSplatRoute
+  '/api/auth/$auth': typeof ApiAuthAuthRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -79,7 +79,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/room/$roomName': typeof RoomRoomNameRoute
   '/room/': typeof RoomIndexRoute
-  '/api/auth/$auth': typeof ApiAuthSplatRoute
+  '/api/auth/$auth': typeof ApiAuthAuthRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -118,7 +118,7 @@ export interface RootRouteChildren {
   RegisterRoute: typeof RegisterRoute
   RoomRoomNameRoute: typeof RoomRoomNameRoute
   RoomIndexRoute: typeof RoomIndexRoute
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiAuthAuthRoute: typeof ApiAuthAuthRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -169,7 +169,7 @@ declare module '@tanstack/react-router' {
       id: '/api/auth/$auth'
       path: '/api/auth/$auth'
       fullPath: '/api/auth/$auth'
-      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      preLoaderRoute: typeof ApiAuthAuthRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -182,7 +182,7 @@ const rootRouteChildren: RootRouteChildren = {
   RegisterRoute: RegisterRoute,
   RoomRoomNameRoute: RoomRoomNameRoute,
   RoomIndexRoute: RoomIndexRoute,
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiAuthAuthRoute: ApiAuthAuthRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
