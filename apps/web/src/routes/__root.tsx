@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
+import { AppHeader } from "@/components/app-header";
 import { Toaster } from "@/components/ui/sonner";
 
 import appCss from "../index.css?url";
@@ -46,6 +47,7 @@ function RootDocument() {
       </head>
       <body>
         <div className="grid h-svh grid-rows-[auto_1fr]">
+          <AppHeader />
           <Outlet />
         </div>
         <Toaster richColors />
