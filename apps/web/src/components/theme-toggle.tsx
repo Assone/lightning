@@ -49,7 +49,7 @@ export const ThemeToggle = () => {
     resolvedMode === "dark" ? "Switch theme (dark)" : "Switch theme (light)";
 
   const themeIcon = resolvedMode === "dark" ? Sun : Moon;
-  const ButtonIcon = theme === "system" ? Monitor : themeIcon;
+  const ButtonIcon = !isMounted || theme !== "system" ? themeIcon : Monitor;
 
   return (
     <DropdownMenu>
