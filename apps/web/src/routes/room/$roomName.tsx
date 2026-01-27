@@ -78,11 +78,11 @@ function RouteComponent() {
       />
 
       <TransferRequest
-        participants={participants}
+        addMessage={addMessage}
         currentParticipantId={clientId}
         displayName={displayName}
+        participants={participants}
         sendMessage={sendMessage}
-        addMessage={addMessage}
       />
 
       <TransferSessions sessions={sessions} />

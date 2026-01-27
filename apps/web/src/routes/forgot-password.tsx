@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import type { FormEvent } from "react";
 import { useId, useState } from "react";
 import { z } from "zod";
-import { useAppForm } from "@/components/form";
+import { useAppForm } from "@/components/form/hooks/form";
 import {
   Card,
   CardContent,

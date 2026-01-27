@@ -1,5 +1,5 @@
-import { useMemo, useRef, useState, type ChangeEvent } from "react";
 import type { Participant } from "@lightning/signaling";
+import { type ChangeEvent, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -37,8 +37,11 @@ export const TransferRequest = ({
   const [targetId, setTargetId] = useState(ALL_RECIPIENTS);
 
   const availableRecipients = useMemo(
-    () => participants.filter((participant) => participant.id !== currentParticipantId),
-    [participants, currentParticipantId],
+    () =>
+      participants.filter(
+        (participant) => participant.id !== currentParticipantId
+      ),
+    [participants, currentParticipantId]
   );
 
   const canSend = selectedFiles.length > 0 && availableRecipients.length > 0;
@@ -56,7 +59,9 @@ export const TransferRequest = ({
     const recipients =
       targetId === ALL_RECIPIENTS
         ? availableRecipients
-        : availableRecipients.filter((participant) => participant.id === targetId);
+        : availableRecipients.filter(
+            (participant) => participant.id === targetId
+          );
 
     const noteValue = note.trim();
     const timestamp = new Date().toISOString();
@@ -69,7 +74,7 @@ export const TransferRequest = ({
         to:
           targetId === ALL_RECIPIENTS
             ? undefined
-            : recipients[0]?.name ?? "Unknown",
+            : (recipients[0]?.name ?? "Unknown"),
         fileName: file.name,
         fileSize: file.size,
         note: noteValue.length > 0 ? noteValue : undefined,
@@ -95,16 +100,17 @@ export const TransferRequest = ({
       <CardHeader>
         <CardTitle>Send Files</CardTitle>
         <CardDescription>
-          Select multiple files and send transfer requests to other participants.
+          Select multiple files and send transfer requests to other
+          participants.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4 text-xs">
         <div className="space-y-2">
           <Label htmlFor="transfer-recipient">Recipient</Label>
           <select
-            id="transfer-recipient"
             className="h-8 w-full rounded-none border border-input bg-transparent px-2.5 text-xs focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-input/30"
             disabled={availableRecipients.length === 0}
+            id="transfer-recipient"
             onChange={(event) => setTargetId(event.target.value)}
             value={targetId}
           >
@@ -125,11 +131,11 @@ export const TransferRequest = ({
         <div className="space-y-2">
           <Label htmlFor="transfer-files">Files</Label>
           <Input
-            ref={fileInputRef}
             id="transfer-files"
-            type="file"
             multiple
             onChange={handleFilesChange}
+            ref={fileInputRef}
+            type="file"
           />
           {selectedFiles.length > 0 ? (
             <ul className="space-y-1 text-muted-foreground">
@@ -148,13 +154,13 @@ export const TransferRequest = ({
           <Label htmlFor="transfer-note">Note (optional)</Label>
           <Textarea
             id="transfer-note"
-            value={note}
             onChange={(event) => setNote(event.target.value)}
             placeholder="Add a message for the recipient."
+            value={note}
           />
         </div>
 
-        <Button type="button" onClick={handleSend} disabled={!canSend}>
+        <Button disabled={!canSend} onClick={handleSend} type="button">
           Send transfer request
         </Button>
       </CardContent>
