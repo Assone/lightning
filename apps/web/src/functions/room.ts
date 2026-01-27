@@ -30,17 +30,15 @@ export const setRoomSession = createServerFn({ method: "POST" })
   .inputValidator(setRoomSessionSchema)
   .handler(async ({ data }) => {
     const session = await useRoomSession();
-    const clientId = session.data.clientId ?? crypto.randomUUID();
-    const displayName = data.displayName.trim();
     const request = getRequest();
     const authSession = await auth.api.getSession(request);
+    const clientId = authSession?.session.userId ?? session.data.clientId ?? crypto.randomUUID();
+    const displayName = data.displayName.trim();
+ 
 
     const payload: RoomSession = {
-      clientId:
-        authSession?.session.userId ??
-        session.data.clientId ??
-        crypto.randomUUID(),
-      displayName: data.displayName.trim(),
+      clientId,
+      displayName,
     };
 
     await session.update(payload);
@@ -54,7 +52,6 @@ export const setRoomSession = createServerFn({ method: "POST" })
 export const getRoomSession = createServerFn({ method: "GET" }).handler(
   async () => {
     const session = await useRoomSession();
-
     return session.data;
   },
 );
