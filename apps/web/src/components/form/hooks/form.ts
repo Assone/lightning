@@ -21,6 +21,11 @@ const InputGroupInput = lazy(() =>
     default: mod.InputGroupInput,
   }))
 );
+const InputPassword = lazy(() =>
+  import("../components/input-password").then((mod) => ({
+    default: mod.InputPassword,
+  }))
+);
 
 const FormErrorMessage = lazy(() =>
   import("../components/form-error-message").then((mod) => ({
@@ -39,6 +44,7 @@ export const { useAppForm, withForm, withFieldGroup } = createFormHook({
     Label: FieldLabel,
     ErrorMessage: FieldErrorMessage,
     InputGroupInput,
+    InputPassword,
   },
   formComponents: {
     ErrorMessage: FormErrorMessage,
