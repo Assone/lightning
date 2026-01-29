@@ -70,6 +70,7 @@ export const TransferRequest = ({
 
   const handleDragOver = (event: DragEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    setIsDragging(true);
     event.dataTransfer.dropEffect = "copy";
   };
 
