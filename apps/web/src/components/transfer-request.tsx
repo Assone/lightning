@@ -1,5 +1,11 @@
 import type { Participant } from "@lightning/signaling";
-import { type ChangeEvent, useMemo, useRef, useState } from "react";
+import {
+  type ChangeEvent,
+  type DragEvent,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -33,6 +39,7 @@ export const TransferRequest = ({
 }: TransferRequestProps) => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isDragging, setIsDragging] = useState(false);
   const [note, setNote] = useState("");
   const [targetId, setTargetId] = useState(ALL_RECIPIENTS);
 
@@ -49,6 +56,29 @@ export const TransferRequest = ({
   const handleFilesChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files ?? []);
     setSelectedFiles(files);
+  };
+
+  const handleDrop = (event: DragEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setIsDragging(false);
+    const files = Array.from(event.dataTransfer.files);
+    setSelectedFiles(files);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleDragOver = (event: DragEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "copy";
+  };
+
+  const handleDragLeave = (event: DragEvent<HTMLButtonElement>) => {
+    const nextTarget = event.relatedTarget as Node | null;
+    if (nextTarget && event.currentTarget.contains(nextTarget)) {
+      return;
+    }
+    setIsDragging(false);
   };
 
   const handleSend = () => {
@@ -131,12 +161,35 @@ export const TransferRequest = ({
         <div className="space-y-2">
           <Label htmlFor="transfer-files">Files</Label>
           <Input
+            className="sr-only"
             id="transfer-files"
             multiple
             onChange={handleFilesChange}
             ref={fileInputRef}
             type="file"
           />
+          <button
+            aria-describedby="transfer-files-help"
+            className={`flex w-full flex-col items-center justify-center gap-1 rounded-none border border-dashed px-3 py-4 text-xs transition-colors ${
+              isDragging
+                ? "border-primary bg-primary/10 text-primary"
+                : "border-input text-muted-foreground hover:border-primary/60"
+            }`}
+            onClick={() => fileInputRef.current?.click()}
+            onDragEnter={() => setIsDragging(true)}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            type="button"
+          >
+            <span className="font-medium text-foreground">
+              Drag and drop files here
+            </span>
+            <span className="text-muted-foreground">or click to browse</span>
+          </button>
+          <p className="text-muted-foreground" id="transfer-files-help">
+            You can also select multiple files from the file picker.
+          </p>
           {selectedFiles.length > 0 ? (
             <ul className="space-y-1 text-muted-foreground">
               {selectedFiles.map((file) => (
