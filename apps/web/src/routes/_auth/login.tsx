@@ -56,18 +56,21 @@ function RouteComponent() {
     },
     onSubmit: async ({ value, formApi }) => {
       try {
-        const result = await authClient.signIn.email({
+        const { data, error } = await authClient.signIn.email({
           email: value.email,
           password: value.password,
+          callbackURL: "/room",
         });
 
-        if (result?.error) {
-          throw new Error(result.error.message || "Unable to sign in.");
+        if (error) {
+          throw new Error(error.message || "Unable to sign in.");
         }
 
-        await navigate({
-          to: "/room",
-        });
+        if (!data?.redirect) {
+          await navigate({
+            to: "/room",
+          });
+        }
       } catch (error) {
         formApi.setErrorMap({
           onSubmit: {
