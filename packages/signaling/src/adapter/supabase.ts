@@ -48,10 +48,15 @@ export class SupabaseSignalingAdapter<
 			return;
 		}
 
-		this.participants = Object.entries(state).map(([id, presences]) => ({
+		const participants = Object.entries(state).map(([id, presences]) => ({
 			id,
 			name: presences[0]?.name ?? "Unknown",
 		}));
+
+		this.handleMessage({
+			type: SignalingInternalMessageType.PARTICIPANTS,
+			participants,
+		});
 	}
 
 	private handlePresenceJoin(key: string, newPresences: Participant[]): void {

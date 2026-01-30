@@ -40,7 +40,8 @@ export abstract class AbstractSignalingAdapter<T extends SignalingMessage>
 	implements SignalingAdapter<T>
 {
 	private readonly eventTarget = new EventTarget();
-	protected participants: Participant[] = [];
+	protected participantsMap = new Map<string, Participant>();
+	private _cachedParticipants: Participant[] | null = null;
 	protected connected = false;
 
 	abstract clientId: string;
@@ -49,8 +50,18 @@ export abstract class AbstractSignalingAdapter<T extends SignalingMessage>
 		return this.connected;
 	}
 
+	/**
+	 * Returns the list of participants.
+	 *
+	 * @returns The participants array. WARNING: The returned array is cached internally.
+	 * Do not mutate it. Treat it as read-only.
+	 */
 	getParticipants(): Participant[] {
-		return [...this.participants];
+		if (this._cachedParticipants) {
+			return this._cachedParticipants;
+		}
+		this._cachedParticipants = Array.from(this.participantsMap.values());
+		return this._cachedParticipants;
 	}
 
 	abstract connect(options: ConnectionOptions): Promise<void>;
@@ -124,7 +135,8 @@ export abstract class AbstractSignalingAdapter<T extends SignalingMessage>
 
 	protected onDisconnected(): void {
 		this.connected = false;
-		this.participants = [];
+		this.participantsMap.clear();
+		this._cachedParticipants = null;
 		this.emit(SignalingEventType.DISCONNECT);
 	}
 
@@ -141,18 +153,22 @@ export abstract class AbstractSignalingAdapter<T extends SignalingMessage>
 	protected handleMessage(message: SignalingInternalMessage) {
 		switch (message.type) {
 			case SignalingInternalMessageType.PARTICIPANTS: {
-				this.participants = message.participants;
+				this.participantsMap.clear();
+				for (const participant of message.participants) {
+					this.participantsMap.set(participant.id, participant);
+				}
+				this._cachedParticipants = null;
 				break;
 			}
 			case SignalingInternalMessageType.JOIN: {
-				this.participants.push(message.participant);
+				this.participantsMap.set(message.participant.id, message.participant);
+				this._cachedParticipants = null;
 				this.emit(SignalingEventType.PARTICIPANT_JOINED, message.participant);
 				break;
 			}
 			case SignalingInternalMessageType.LEAVE: {
-				this.participants = this.participants.filter(
-					(p) => p.id !== message.participant.id
-				);
+				this.participantsMap.delete(message.participant.id);
+				this._cachedParticipants = null;
 				this.emit(SignalingEventType.PARTICIPANT_LEAVE, message.participant);
 				break;
 			}
