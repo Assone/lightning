@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import type { FormEvent } from "react";
-import { useId, useState } from "react";
+import { useId } from "react";
 import { z } from "zod";
 import { useAppForm } from "@/components/form/hooks/form";
 import {
@@ -16,20 +16,22 @@ import { InputGroup } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
 
-export const Route = createFileRoute("/forgot-password")({
+export const Route = createFileRoute("/_auth/login")({
   component: RouteComponent,
 });
 
 const formSchema = z.object({
-  email: z.string().email("Enter a valid email"),
+  email: z.email("Enter a valid email"),
+  password: z.string().min(1, "Password is required"),
 });
 
 const defaultValues: z.infer<typeof formSchema> = {
   email: "",
+  password: "",
 };
 
 function RouteComponent() {
-  const [requestSent, setRequestSent] = useState(false);
+  const navigate = useNavigate();
   const formId = useId();
   const form = useAppForm({
     defaultValues,
@@ -39,17 +41,19 @@ function RouteComponent() {
     },
     onSubmit: async ({ value, formApi }) => {
       try {
-        const result = await authClient.requestPasswordReset({
+        const result = await authClient.signIn.email({
           email: value.email,
+          password: value.password,
         });
 
         if (result?.error) {
-          throw new Error(result.error.message || "Unable to send reset link.");
+          throw new Error(result.error.message || "Unable to sign in.");
         }
 
-        setRequestSent(true);
+        await navigate({
+          to: "/room",
+        });
       } catch (error) {
-        setRequestSent(false);
         formApi.setErrorMap({
           onSubmit: {
             form: {
@@ -68,12 +72,12 @@ function RouteComponent() {
   };
 
   return (
-    <div className="container flex items-center justify-center bg-background px-4 py-10">
+    <div className="container flex items-center justify-center bg-background">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle>Reset your password</CardTitle>
+          <CardTitle>Welcome back</CardTitle>
           <CardDescription>
-            We will send a reset link to your email.
+            Sign in to continue to your workspace.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -82,7 +86,7 @@ function RouteComponent() {
               <form.AppField name="email">
                 {(field) => (
                   <field.Field>
-                    <field.Label>Email address</field.Label>
+                    <field.Label>Email</field.Label>
                     <InputGroup>
                       <field.InputGroupInput
                         autoComplete="email"
@@ -90,6 +94,24 @@ function RouteComponent() {
                         type="email"
                       />
                     </InputGroup>
+                    <field.ErrorMessage />
+                  </field.Field>
+                )}
+              </form.AppField>
+
+              <form.AppField name="password">
+                {(field) => (
+                  <field.Field>
+                    <div className="flex items-center justify-between">
+                      <field.Label>Password</field.Label>
+                      <Link
+                        className="text-muted-foreground text-xs transition hover:text-foreground"
+                        to="/forgot-password"
+                      >
+                        Forgot password?
+                      </Link>
+                    </div>
+                    <field.InputPassword />
                     <field.ErrorMessage />
                   </field.Field>
                 )}
@@ -104,20 +126,15 @@ function RouteComponent() {
               {({ isSubmitting }) => (
                 <>
                   {isSubmitting ? <Spinner /> : null}
-                  <span>Send reset link</span>
+                  <span>Sign in</span>
                 </>
               )}
             </form.SubmitButton>
           </form.AppForm>
-          {requestSent ? (
-            <span className="text-muted-foreground text-xs">
-              If the email exists, a reset link is on the way.
-            </span>
-          ) : null}
           <span className="text-muted-foreground text-xs">
-            Remembered your password?{" "}
-            <Link className="text-foreground hover:underline" to="/login">
-              Back to sign in
+            New here?{" "}
+            <Link className="text-foreground hover:underline" to="/register">
+              Create an account
             </Link>
           </span>
         </CardFooter>

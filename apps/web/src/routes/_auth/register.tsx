@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
 import type { FormEvent } from "react";
 import { useId } from "react";
 import { z } from "zod";
@@ -17,19 +17,17 @@ import { InputGroup } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
 
-export const Route = createFileRoute("/register")({
+export const Route = createFileRoute("/_auth/register")({
   component: RouteComponent,
 });
 
 const formSchema = z
   .object({
     fullName: z.string().min(1, "Full name is required"),
-    email: z.string().email("Enter a valid email"),
+    email: z.email("Enter a valid email"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string().min(1, "Confirm your password"),
-    terms: z.literal(true, {
-      errorMap: () => ({ message: "You must accept the terms." }),
-    }),
+    terms: z.boolean("You must accept the terms and conditions"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -46,6 +44,7 @@ const defaultValues: z.infer<typeof formSchema> = {
 
 function RouteComponent() {
   const navigate = useNavigate();
+  const searchParams = useSearch({from: '/_auth'})
   const formId = useId();
   const form = useAppForm({
     defaultValues,
@@ -66,7 +65,7 @@ function RouteComponent() {
         }
 
         await navigate({
-          to: "/room",
+          to: searchParams.redirect || "/room",
         });
       } catch (error) {
         formApi.setErrorMap({
