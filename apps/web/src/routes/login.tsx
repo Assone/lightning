@@ -72,7 +72,7 @@ function RouteComponent() {
   };
 
   return (
-    <div className="flex min-h-svh items-center justify-center bg-background px-4 py-10">
+    <div className="container flex items-center justify-center bg-background">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <CardTitle>Welcome back</CardTitle>
@@ -111,13 +111,7 @@ function RouteComponent() {
                         Forgot password?
                       </Link>
                     </div>
-                    <InputGroup>
-                      <field.InputGroupInput
-                        autoComplete="current-password"
-                        placeholder="Enter your password"
-                        type="password"
-                      />
-                    </InputGroup>
+                    <field.InputPassword />
                     <field.ErrorMessage />
                   </field.Field>
                 )}
