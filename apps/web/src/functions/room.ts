@@ -4,7 +4,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { getRequest, useSession } from "@tanstack/react-start/server";
 import { z } from "zod";
 
-interface RoomSession {
+export interface RoomSession {
   clientId: string;
   displayName: string;
 }
@@ -54,6 +54,16 @@ export const setRoomSession = createServerFn({ method: "POST" })
 export const getRoomSession = createServerFn({ method: "GET" }).handler(
   async () => {
     const session = await useRoomSession();
-    return session.data;
+    const request = getRequest();
+    const authSession = await auth.api.getSession(request);
+    const clientId =
+      authSession?.session.userId ?? session.data.clientId;
+    const displayName = session.data.displayName ?? authSession?.user.name;
+
+
+    return {
+      clientId,
+      displayName,
+    };
   }
 );
