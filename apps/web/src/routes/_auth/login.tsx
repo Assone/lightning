@@ -1,4 +1,9 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  redirect,
+  useNavigate,
+} from "@tanstack/react-router";
 import type { FormEvent } from "react";
 import { useId } from "react";
 import { z } from "zod";
@@ -14,10 +19,20 @@ import {
 import { FieldGroup } from "@/components/ui/field";
 import { InputGroup } from "@/components/ui/input-group";
 import { Spinner } from "@/components/ui/spinner";
+import { getUser } from "@/functions/get-user";
 import { authClient } from "@/lib/auth-client";
 
 export const Route = createFileRoute("/_auth/login")({
   component: RouteComponent,
+  beforeLoad: async ({ search }) => {
+    const session = await getUser();
+
+    if (session) {
+      throw redirect({
+        to: search.redirect || "/room",
+      });
+    }
+  },
 });
 
 const formSchema = z.object({
