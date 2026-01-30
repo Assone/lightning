@@ -56,10 +56,8 @@ export const getRoomSession = createServerFn({ method: "GET" }).handler(
     const session = await useRoomSession();
     const request = getRequest();
     const authSession = await auth.api.getSession(request);
-    const clientId =
-      authSession?.session.userId ?? session.data.clientId;
+    const clientId = authSession?.session.userId ?? session.data.clientId;
     const displayName = session.data.displayName ?? authSession?.user.name;
-
 
     return {
       clientId,

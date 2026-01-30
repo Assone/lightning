@@ -1,4 +1,9 @@
-import { createFileRoute, Link, useNavigate, useSearch } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+  useSearch,
+} from "@tanstack/react-router";
 import type { FormEvent } from "react";
 import { useId } from "react";
 import { z } from "zod";
@@ -44,7 +49,7 @@ const defaultValues: z.infer<typeof formSchema> = {
 
 function RouteComponent() {
   const navigate = useNavigate();
-  const searchParams = useSearch({from: '/_auth'})
+  const searchParams = useSearch({ from: "/_auth" });
   const formId = useId();
   const form = useAppForm({
     defaultValues,
