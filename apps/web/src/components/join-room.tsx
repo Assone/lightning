@@ -74,7 +74,7 @@ export const JoinRoom: React.FC<JoinRoomProps> = ({
   };
 
   return (
-    <Card>
+    <Card className="min-w-md">
       <CardContent>
         {isPending && (
           <Empty>

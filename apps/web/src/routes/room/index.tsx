@@ -22,7 +22,7 @@ function RouteComponent() {
   const { displayName } = Route.useLoaderData();
 
   return (
-    <div>
+    <div className="flex justify-center items-center">
       <JoinRoom displayName={displayName} roomName={roomName} />
     </div>
   );
