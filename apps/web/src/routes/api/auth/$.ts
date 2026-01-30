@@ -1,3 +1,4 @@
+// biome-ignore lint/style/useFilenamingConvention: Splat route
 import { auth } from "@lightning/auth";
 import { createFileRoute } from "@tanstack/react-router";
 

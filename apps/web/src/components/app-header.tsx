@@ -1,11 +1,11 @@
-import { Link, useMatch,  } from "@tanstack/react-router";
+import { Link, useMatch } from "@tanstack/react-router";
 import { UserProfile } from "@/components/user-profile";
 import { ThemeToggle } from "./theme-toggle";
 
 const appTitle = "Lightning";
 
 export const AppHeader = () => {
-  const match = useMatch({from: '/_auth', shouldThrow: false})
+  const match = useMatch({ from: "/_auth", shouldThrow: false });
 
   return (
     <header className="border-b bg-background">
