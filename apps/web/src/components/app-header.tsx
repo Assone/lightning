@@ -1,10 +1,12 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useMatch,  } from "@tanstack/react-router";
 import { UserProfile } from "@/components/user-profile";
 import { ThemeToggle } from "./theme-toggle";
 
 const appTitle = "Lightning";
 
 export const AppHeader = () => {
+  const match = useMatch({from: '/_auth', shouldThrow: false})
+
   return (
     <header className="border-b bg-background">
       <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-4 py-3">
@@ -12,7 +14,7 @@ export const AppHeader = () => {
           {appTitle}
         </Link>
         <div className="flex items-center gap-3">
-          <UserProfile />
+          {!match && <UserProfile />}
           <ThemeToggle />
         </div>
       </div>
