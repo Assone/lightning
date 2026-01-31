@@ -32,15 +32,17 @@ const STATUS_STYLES: Record<TransferSessionStatus, string> = {
   completed: "bg-slate-500/10 text-slate-700",
 };
 
+const dateTimeFormatter = new Intl.DateTimeFormat("zh-CN", {
+  dateStyle: "medium",
+  timeStyle: "short",
+});
+
 const formatTimestamp = (timestamp?: number): string => {
-  if (!timestamp) {
+  if (typeof timestamp !== "number") {
     return "-";
   }
 
-  return new Intl.DateTimeFormat("zh-CN", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(new Date(timestamp));
+  return dateTimeFormatter.format(new Date(timestamp));
 };
 
 const formatProgress = (progress?: TransferSession["progress"]): string => {
