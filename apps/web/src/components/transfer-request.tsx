@@ -2,6 +2,7 @@ import type { Participant } from "@lightning/signaling";
 import {
   type ChangeEvent,
   type DragEvent,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -51,7 +52,34 @@ export const TransferRequest = ({
     [participants, currentParticipantId]
   );
 
-  const canSend = selectedFiles.length > 0 && availableRecipients.length > 0;
+  const resolvedTargetId = useMemo(() => {
+    if (targetId === ALL_RECIPIENTS) {
+      return targetId;
+    }
+
+    const isStillAvailable = availableRecipients.some(
+      (participant) => participant.id === targetId
+    );
+    return isStillAvailable ? targetId : ALL_RECIPIENTS;
+  }, [availableRecipients, targetId]);
+
+  useEffect(() => {
+    if (resolvedTargetId !== targetId) {
+      setTargetId(resolvedTargetId);
+    }
+  }, [resolvedTargetId, targetId]);
+
+  const recipients = useMemo(() => {
+    if (resolvedTargetId === ALL_RECIPIENTS) {
+      return availableRecipients;
+    }
+
+    return availableRecipients.filter(
+      (participant) => participant.id === resolvedTargetId
+    );
+  }, [availableRecipients, resolvedTargetId]);
+
+  const canSend = selectedFiles.length > 0 && recipients.length > 0;
 
   const handleFilesChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files ?? []);
@@ -87,13 +115,6 @@ export const TransferRequest = ({
       return;
     }
 
-    const recipients =
-      targetId === ALL_RECIPIENTS
-        ? availableRecipients
-        : availableRecipients.filter(
-            (participant) => participant.id === targetId
-          );
-
     const noteValue = note.trim();
     const timestamp = new Date().toISOString();
 
@@ -103,7 +124,7 @@ export const TransferRequest = ({
         sessionId: crypto.randomUUID(),
         from: displayName,
         to:
-          targetId === ALL_RECIPIENTS
+          resolvedTargetId === ALL_RECIPIENTS
             ? undefined
             : (recipients[0]?.name ?? "Unknown"),
         fileName: file.name,
@@ -143,7 +164,7 @@ export const TransferRequest = ({
             disabled={availableRecipients.length === 0}
             id="transfer-recipient"
             onChange={(event) => setTargetId(event.target.value)}
-            value={targetId}
+            value={resolvedTargetId}
           >
             <option value={ALL_RECIPIENTS}>Everyone</option>
             {availableRecipients.map((participant) => (
